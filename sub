@@ -1,0 +1,15 @@
+def has_zero_sum_subarray(arr):
+   prefix_sums = set()
+   current_sum = 0
+   for num in arr:
+       current_sum += num
+       # Check if sum is zero or already seen
+       if current_sum == 0 or current_sum in prefix_sums:
+           return True
+       prefix_sums.add(current_sum)
+   return False
+# Example usage
+arr1 = [4, 2, -3, 1, 6]
+arr2 = [-3, 2, 3, 1, 6]
+print("Array:", arr1, "=>", has_zero_sum_subarray(arr1)) # True
+print("Array:", arr2, "=>", has_zero_sum_subarray(arr2)) # False
