@@ -1,0 +1,37 @@
+# Program to print all subarrays with sum 0
+
+def find_zero_sum_subarrays(arr):
+    sum_map = {}
+    result = []
+
+    curr_sum = 0
+
+    for i, num in enumerate(arr):
+        curr_sum += num
+
+        if curr_sum == 0:
+            result.append((0, i))
+
+        if curr_sum in sum_map:
+            for start_index in sum_map[curr_sum]:
+                result.append((start_index + 1, i))
+
+        sum_map.setdefault(curr_sum, []).append(i)
+
+    return result
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        arr = [6, 3, -1, -3, 4, -2, 2, 4, 6, -12, -7]
+        subarrays = find_zero_sum_subarrays(arr)
+
+        if subarrays:
+            print("Subarrays with sum 0:")
+            for start, end in subarrays:
+                print(arr[start:end+1])
+        else:
+            print("No subarray with sum 0 found.")
+    except Exception as e:
+        print(f"Error: {e}")
