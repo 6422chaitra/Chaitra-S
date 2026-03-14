@@ -1,0 +1,20 @@
+import math
+def in_place_merge(arr, start, mid, end):
+   n = end - start + 1
+   gap = math.ceil(n / 2)
+   while gap > 0:
+       i = start
+       while i + gap <= end:
+           if arr[i] > arr[i + gap]:
+               arr[i], arr[i + gap] = arr[i + gap], arr[i]
+           i += 1
+       gap = math.ceil(gap / 2) if gap > 1 else 0
+def merge_sort_in_place(arr, l, r):
+   if l < r:
+       m = (l + r) // 2
+       merge_sort_in_place(arr, l, m)
+       merge_sort_in_place(arr, m + 1, r)
+       in_place_merge(arr, l, m, r)
+arr = [10, 30, 14, 11, 16, 7, 28]
+merge_sort_in_place(arr, 0, len(arr) - 1)
+print(arr)
