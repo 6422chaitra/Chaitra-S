@@ -1,0 +1,44 @@
+def max_len_equal_zeros_ones(arr):
+    if not arr or any(x not in (0, 1) for x in arr):
+        raise ValueError("Input must be a non-empty list containing only 0's and 1's.")
+
+    # Replace 0 with -1 to use sum=0 logic
+    transformed = [-1 if x == 0 else 1 for x in arr]
+
+    prefix_sum = 0
+    sum_index_map = {}  # Stores first occurrence of a prefix sum
+    max_len = 0
+    start = end = -1
+
+    for i, val in enumerate(transformed):
+        prefix_sum += val
+
+        if prefix_sum == 0:
+            max_len = i + 1
+            start, end = 0, i
+
+        if prefix_sum in sum_index_map:
+            # Found a subarray with sum 0
+            prev_index = sum_index_map[prefix_sum]
+            if i - prev_index > max_len:
+                max_len = i - prev_index
+                start, end = prev_index + 1, i
+        else:
+            sum_index_map[prefix_sum] = i
+
+    return max_len, start, end
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        arr = [0, 0, 1, 0, 1, 1, 0]
+        length, start, end = max_len_equal_zeros_ones(arr)
+        if length > 0:
+            print(f"Max length: {length}")
+            print(f"Subarray: {arr[start:end+1]}")
+            print(f"Indices: {start} to {end}")
+        else:
+            print("No subarray with equal 0's and 1's found.")
+    except ValueError as e:
+        print("Error:", e)
