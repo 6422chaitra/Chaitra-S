@@ -1,0 +1,46 @@
+def max_len_subarray_with_sum(arr, target_sum):
+    prefix_sum_map = {}  # Stores first occurrence of a prefix sum
+    prefix_sum = 0
+    max_length = 0
+    start_index = -1
+    end_index = -1
+
+    for i, num in enumerate(arr):
+        prefix_sum += num
+
+        # Case 1: Subarray from index 0 to i
+        if prefix_sum == target_sum:
+            if i + 1 > max_length:
+                max_length = i + 1
+                start_index = 0
+                end_index = i
+
+        # Case 2: Subarray from some index after 0
+        if (prefix_sum - target_sum) in prefix_sum_map:
+            prev_index = prefix_sum_map[prefix_sum - target_sum]
+            if i - prev_index > max_length:
+                max_length = i - prev_index
+                start_index = prev_index + 1
+                end_index = i
+
+        # Store prefix sum if not already stored
+        if prefix_sum not in prefix_sum_map:
+            prefix_sum_map[prefix_sum] = i
+
+    return max_length, start_index, end_index
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        arr = [1, 2, 3, 1, 1, 1, 1, 4, 2, 3]
+        target_sum = 6
+        length, start, end = max_len_subarray_with_sum(arr, target_sum)
+
+        if length > 0:
+            print(f"Maximum length subarray with sum {target_sum} is {length}")
+            print(f"Subarray: {arr[start:end+1]}")
+        else:
+            print(f"No subarray found with sum {target_sum}")
+    except Exception as e:
+        print(f"Error: {e}")
