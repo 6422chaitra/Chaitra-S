@@ -1,0 +1,46 @@
+def largest_consecutive_subarray(arr):
+    n = len(arr)
+    if n == 0:
+        return [], 0
+
+    max_len = 0
+    start_index = 0
+    end_index = 0
+
+    # Check all subarrays
+    for i in range(n):
+        seen = set()
+        min_val = arr[i]
+        max_val = arr[i]
+
+        for j in range(i, n):
+            # If duplicate found, break
+            if arr[j] in seen:
+                break
+            seen.add(arr[j])
+
+            # Update min and max
+            min_val = min(min_val, arr[j])
+            max_val = max(max_val, arr[j])
+
+            # Check if current subarray is consecutive
+            if max_val - min_val == j - i:
+                curr_len = j - i + 1
+                if curr_len > max_len:
+                    max_len = curr_len
+                    start_index = i
+                    end_index = j
+
+    return arr[start_index:end_index + 1], max_len
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        # Example array
+        arr = [2, 0, 2, 1, 4, 3, 1, 0]
+        subarray, length = largest_consecutive_subarray(arr)
+        print(f"Largest consecutive subarray: {subarray}")
+        print(f"Length: {length}")
+    except Exception as e:
+        print(f"Error: {e}")
