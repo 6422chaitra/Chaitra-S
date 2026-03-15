@@ -1,0 +1,29 @@
+def rearrange_alternate_high_low(arr):
+    
+    if not isinstance(arr, list):
+        raise TypeError("Input must be a list of integers.")
+    if not all(isinstance(x, (int, float)) for x in arr):
+        raise ValueError("All elements must be integers or floats.")
+
+    n = len(arr)
+    for i in range(n - 1):
+        if i % 2 == 0:
+            # Even index: ensure arr[i] <= arr[i+1]
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+        else:
+            # Odd index: ensure arr[i] >= arr[i+1]
+            if arr[i] < arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+    return arr
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        nums = [9, 6, 8, 3, 7]
+        print("Original array:", nums)
+        result = rearrange_alternate_high_low(nums)
+        print("Rearranged array:", result)
+    except (TypeError, ValueError) as e:
+        print("Error:", e)
