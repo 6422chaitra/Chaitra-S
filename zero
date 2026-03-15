@@ -1,0 +1,36 @@
+def move_zeros_to_end(arr):
+    if not isinstance(arr, list):
+        raise TypeError("Input must be a list.")
+
+    n = len(arr)
+    if n == 0:
+        return arr 
+    pos = 0
+
+    # First pass: move non-zero elements forward
+    for i in range(n):
+        if arr[i] != 0:
+            arr[pos] = arr[i]
+            pos += 1
+
+    # Second pass: fill remaining positions with zeros
+    for i in range(pos, n):
+        arr[i] = 0
+
+    return arr
+
+
+# Example usage
+try:
+    nums = [0, 1, 0, 3, 12, 0, 5]
+    print("Original array:", nums)
+    move_zeros_to_end(nums)
+    print("After moving zeros:", nums)
+
+    # Edge cases
+    print(move_zeros_to_end([0, 0, 0]))      # All zeros
+    print(move_zeros_to_end([1, 2, 3]))      # No zeros
+    print(move_zeros_to_end([]))             # Empty list
+
+except Exception as e:
+    print("Error:", e)
