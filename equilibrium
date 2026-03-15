@@ -1,0 +1,32 @@
+def find_equilibrium_indices(arr):
+    if not isinstance(arr, list) or not all(isinstance(x, (int, float)) for x in arr):
+        raise ValueError("Input must be a list of numbers.")
+
+    total_sum = sum(arr)
+    left_sum = 0
+    equilibrium_indices = []
+
+    for i, num in enumerate(arr):
+        # Right sum is total_sum - left_sum - current element
+        right_sum = total_sum - left_sum - num
+        if left_sum == right_sum:
+            equilibrium_indices.append(i)
+        left_sum += num
+
+    return equilibrium_indices
+
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        # Example array
+        arr = [1, 3, 5, 2, 2]
+        result = find_equilibrium_indices(arr)
+
+        if result:
+            print(f"Equilibrium index/indices: {result}")
+        else:
+            print("No equilibrium index found.")
+
+    except ValueError as e:
+        print(f"Error: {e}")
